@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sign-up</title>
+    <link rel="stylesheet" href="stylesheets/register.css">
+</head>
+<body>
+
+
+    <!-- <div class="container">
+        <div class="screen">
+            <div class="screen__content">
+                <h1 style="color: white; text-align: center;">Sign-up Form</h1>
+                <form class="login">
+                    <div class="login__field">
+                        <i class="login__icon fas fa-user"></i>
+                        <input  class="login__input"  type="" placeholder="name" id="name">
+                    </div>
+                    <div class="login__field">
+                        <i class="login__icon fas fa-user"></i>
+                        
+                        <input type="email"  class="login__input"  placeholder="Enter Email ID" id="email">
+                    </div>
+                    <div class="login__field">
+                        <i class="login__icon fas fa-lock"></i>
+                        
+                        <input type="password" class="login__input"  placeholder="Enter Password" id="pwd">
+                    </div>
+                    <!-- <button  onclick="register()" class="button login__submit">
+                        <span class="button__text">SIGN UP</span>
+                        <i class="button__icon fas fa-chevron-right"></i>
+                    </button>				 -->
+                    <button onclick="register()">Login</button>
+                </form>                    
+                </div>
+            </div>
+        
+           		
+        </div>
+    </div> -->
+
+
+    <h1>Login Form</h1>
+    <div>
+        <table>
+            <tr>
+                <td>Name</td>
+                <td>
+                    <input type="" placeholder="name" id="name">
+                </td>
+            </tr>
+            <tr>
+
+                <td>Enter Email</td>
+                <td>
+                    <input type="email" placeholder="Enter Email ID" id="email">
+                </td>
+            </tr>
+            <tr>
+                <td>Enter Password</td>
+                <td>
+                    <input type="password" placeholder="Enter Password" id="pwd">
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <button onclick="register()">Login</button> 
+                </td>
+            </tr>
+        </table>
+
+    </div>
+
+    <script>
+        function register() {
+            var http = new XMLHttpRequest();
+            var details = {
+                "name":  document.querySelector("#name").value,
+                "email" : document.querySelector("#email").value,
+                "pwd" : document.querySelector("#pwd").value
+            };
+            var data = JSON.stringify(details);
+            var url = "https://shopping-api-2001.herokuapp.com/register";
+            http.onreadystatechange = function() {
+                if(http.readyState == 4 && http.status == 200) {
+                    console.log(http.responseText);
+                    var json = JSON.parse(this.responseText);
+                    // localStorage.setItem("token",json.token);
+                    location.href = "login.html";
+                }
+            }
+            http.open('post',url,true);
+            http.setRequestHeader('Content-Type','application/json');
+            http.send(data);
+        }
+    </script>
+    
+</body>
+</html>

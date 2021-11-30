@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="main.css">
+    <style>
+        body {
+            background: linear-gradient(90deg, #C7C5F4, #776BCC);
+        }
+        .row {
+            display: flex;
+            justify-content: space-around;
+            display: flex;
+            flex-direction: row;
+            column-count: 2;
+            flex-wrap: wrap;
+        }
+        /* aside {
+            border: 1px solid red;
+            width: 12%;
+            height: 500px;
+        } */
+        main {
+            /* border: 1px solid blue; */
+            width: 78%;
+        }
+        .col{
+            display: flex;
+            flex-direction: column;
+            column-count: 2;
+            width: 180px;
+            flex-wrap: wrap;
+            padding: 10px;
+            border: 1px blue solid;
+            border-radius: 3px;
+            margin: 5px;
+            align-items: center;
+            justify-content: center;
+        }
+        img{
+            height: 150px;
+            width: 100px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1 style="text-align: center;">SHOPPING PORTAL</h1>
+
+    <div class="row">       
+                    <a href="#" onclick="products()">Show Products</a>
+        
+        <main>
+            <div class="row" id="products"></div>
+        </main>
+    </div>
+
+    <script>
+        function products() {
+            var http = new XMLHttpRequest();
+            var div = document.querySelector("#products");
+            div.innerHTML = "";
+            var url = "https://fakestoreapi.com/products?limit=10";
+            http.onreadystatechange = function() {
+                if(http.readyState == 4 && http.status == 200) {
+                    console.log(http.responseText);
+                    product = JSON.parse(http.responseText);
+                    console.log(product);
+                    for(var i = 0 ;i<10;i++){
+                        var productDiv = document.createElement("div");
+                        productDiv.className = "col";
+                        var img = document.createElement("img");
+                        img.src = product[i].image
+                        img.className = "image";
+                        productDiv.appendChild(img);
+                        var p = document.createElement("p");
+                        p.innerText = product[i].title;
+                        productDiv.appendChild(p);
+                        var p = document.createElement("p");
+                        p.innerText = product[i].price;
+                        productDiv.appendChild(p);
+                        div.appendChild(productDiv);
+                    }
+                }  
+            }
+            http.open('get',url,true);
+            http.setRequestHeader('Content-Type','application/json');
+            http.setRequestHeader("Authorization",localStorage.getItem("token"));
+            http.send();
+        }        
+    </script>
+    
+</body>
+</html>
